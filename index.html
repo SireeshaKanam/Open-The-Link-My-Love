@@ -2,220 +2,156 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Just For You ❤️</title>
+<title>Will You Be My Valentine 💘</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-  --pink: #ff4d6d;
-  --soft: #fff0f3;
-}
-
 * {
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
 }
 
 body {
   margin: 0;
   height: 100vh;
-  background: radial-gradient(circle at top, #ffd6e0, #ff8fab);
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  font-family: "Segoe UI", sans-serif;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-/* Card */
 .card {
   background: white;
-  border-radius: 24px;
-  padding: 32px 26px;
+  padding: 30px 25px;
+  border-radius: 25px;
+  text-align: center;
   width: 90%;
   max-width: 360px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-  animation: openCard 1s ease forwards;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
 }
 
-@keyframes openCard {
-  from { transform: scale(0.5) rotateX(40deg); opacity: 0; }
-  to   { transform: scale(1) rotateX(0); opacity: 1; }
+h1 {
+  color: #ff2f68;
+  font-size: 26px;
+  margin-bottom: 10px;
 }
 
-.title {
-  font-size: 22px;
-  color: var(--pink);
-  margin-bottom: 8px;
+.sub {
+  font-size: 20px;
 }
 
-.name {
-  font-weight: 700;
-  color: #ff006e;
-}
-
-.hug {
-  font-size: 64px;
-  margin: 10px 0;
-  animation: pulse 1.8s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-}
-
-.text {
-  font-size: 15px;
-  color: #444;
-}
-
-/* Buttons */
 .buttons {
-  margin-top: 20px;
+  position: relative;
+  height: 150px;
+  margin-top: 25px;
 }
 
 button {
-  padding: 12px 28px;
-  border-radius: 30px;
+  padding: 14px 28px;
+  font-size: 18px;
+  border-radius: 40px;
   border: none;
-  font-size: 17px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-#yes {
-  background: var(--pink);
+#yesBtn {
+  background: #ff2f68;
   color: white;
-  box-shadow: 0 0 15px rgba(255,77,109,0.6);
 }
 
-#yes:hover {
-  transform: scale(1.1);
-}
-
-#no {
+#noBtn {
   background: #e0e0e0;
-  margin-left: 10px;
+  position: absolute;
+  left: 120px;
+  top: 70px;
+  transition: transform 0.2s ease;
 }
 
-.shake {
-  animation: shake 0.35s;
+.hug {
+  font-size: 80px;
+  animation: hugAnim 1s infinite alternate;
 }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
-  75% { transform: translateX(-6px); }
-  100% { transform: translateX(0); }
+@keyframes hugAnim {
+  from { transform: scale(1); }
+  to { transform: scale(1.25); }
 }
 
-/* YES animation screen */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #ff758f, #ff4d6d);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-  font-size: 24px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.overlay.show {
-  animation: reveal 0.8s forwards;
-}
-
-@keyframes reveal {
-  to { opacity: 1; pointer-events: auto; }
-}
-
-.overlay .big {
-  font-size: 70px;
-  animation: hugBig 1.5s infinite;
-}
-
-@keyframes hugBig {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
-}
-
-/* Floating hearts */
 .heart {
   position: fixed;
-  bottom: -20px;
-  font-size: 22px;
-  animation: float 4s linear forwards;
+  bottom: 0;
+  font-size: 26px;
+  animation: floatUp 3.5s linear forwards;
 }
 
-@keyframes float {
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
   to {
-    transform: translateY(-110vh);
+    transform: translateY(-140vh);
     opacity: 0;
   }
 }
 </style>
 </head>
 
-<body onclick="startMusic()">
+<body>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/10/30/audio_9f0dff7d57.mp3" type="audio/mpeg">
-</audio>
-
-<div class="card">
-  <div class="hug">🤗💕</div>
-  <div class="title">Hey <span class="name">HER_NAME</span> ❤️</div>
-  <div class="text">Can I give you a warm hug?</div>
+<div class="card" id="card">
+  <h1>Will you be my Valentine? 💖</h1>
+  <div class="sub">Please accept my love 🥺💘</div>
 
   <div class="buttons">
-    <button id="yes" onclick="yesClicked()">Yes 💖</button>
-    <button id="no" onclick="noClicked()">No 💔</button>
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 💔</button>
   </div>
 </div>
 
-<div class="overlay" id="overlay">
-  <div class="big">💕🤗💕</div>
-  <div>You’re hugged forever, HER_NAME ❤️</div>
-</div>
+<!-- Music (starts ONLY after YES click) -->
+<audio id="bgMusic" preload="auto">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
 
 <script>
-let musicStarted = false;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+const music = document.getElementById("bgMusic");
 
-function startMusic() {
-  if (!musicStarted) {
-    document.getElementById("music").play();
-    musicStarted = true;
+function escapeNo() {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform = translate(${x}px, ${y}px);
+}
+
+// works for mobile + desktop
+noBtn.addEventListener("mouseenter", escapeNo);
+noBtn.addEventListener("touchstart", escapeNo);
+noBtn.addEventListener("click", escapeNo);
+
+yesBtn.addEventListener("click", () => {
+  music.play();
+
+  card.innerHTML = `
+    <h1>I knew it 😍💖</h1>
+    <div class="hug">🤗💞🤗</div>
+    <p>You made my heart so happy 💘✨</p>
+  `;
+
+  for (let i = 0; i < 40; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = ["💖","💕","💘","💝","❤️","💞"][Math.floor(Math.random()*6)];
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (2 + Math.random()*2) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
   }
-}
-
-function noClicked() {
-  const no = document.getElementById("no");
-  no.classList.remove("shake");
-  void no.offsetWidth;
-  no.classList.add("shake");
-}
-
-function yesClicked() {
-  document.getElementById("overlay").classList.add("show");
-  createHearts();
-}
-
-function createHearts() {
-  for (let i = 0; i < 30; i++) {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = "💖";
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (Math.random() * 2 + 3) + "s";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 5000);
-  }
-}
+});
 </script>
 
 </body>
